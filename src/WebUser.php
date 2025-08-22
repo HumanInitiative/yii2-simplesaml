@@ -31,7 +31,11 @@ class WebUser extends User
             
             require_once($this->autoloaderPath);
 
-            $this->_saml = new \SimpleSAML_Auth_Simple($this->authSource);
+            if (class_exists('\SimpleSAML_Auth_Simple')) {
+                $this->_saml = new \SimpleSAML_Auth_Simple($this->authSource);
+            } else {
+                $this->_saml = new \SimpleSAML\Auth\Simple($this->authSource);
+            }
 
             $this->checkId();
         }
